@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ООО «Консалтинг» – экспертные решения</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /*
+          ТЕОРИЯ ЦВЕТА:
+          Основной: #1B3A6B (глубокий сапфир/индиго) — доверие, надёжность, профессионализм.
+            Исследования (Elliot, Maier 2014) показывают: синий снижает тревогу и повышает
+            восприятие компетентности — идеально для B2B консалтинга.
+          Акцент: #E05C3A (тёплый коралловый терракот) — призыв к действию, тепло, уверенность.
+            Контраст тёплого и холодного создаёт визуальное напряжение, удерживающее взгляд.
+          Фон: #F7F5F2 (тёплый молочный) — нейтральный, дружественный, не стерильный.
+            Чистый белый утомляет глаза; тёплый оффвайт воспринимается как уютный и солидный.
+          Вторичный: #2D5C8E (средний синий) — для градиентов и глубины.
+          Текст: #1A1A2E (почти чёрный с синеватым оттенком) — мягче чистого чёрного.
+        */
+
+        :root {
+            --navy: #1B3A6B;
+            --navy-mid: #2D5C8E;
+            --coral: #E05C3A;
+            --coral-light: #F07555;
+            --cream: #F7F5F2;
+            --cream-dark: #EDE9E3;
+            --text: #1A1A2E;
+            --text-muted: #5C6278;
+            --white: #FFFFFF;
+            --border: rgba(27, 58, 107, 0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            line-height: 1.65;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; }
+
+        h1 {
+            font-size: clamp(2.8rem, 5vw, 4.5rem);
+            line-height: 1.1;
+            color: var(--white);
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            color: var(--navy);
+            text-align: center;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.01em;
+        }
+
+        .section-label {
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--coral);
+            margin-bottom: 0.6rem;
+        }
+
+        .section-underline {
+            width: 60px;
+            height: 3px;
+            background: var(--coral);
+            margin: 0.6rem auto 3rem;
+            border-radius: 2px;
+        }
+
+        .section { padding: 90px 0; }
+
+        /* ── NAVBAR ─────────────────────────────── */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(247, 245, 242, 0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            transition: box-shadow 0.3s;
+        }
+
+        .navbar.scrolled {
+            box-shadow: 0 4px 24px rgba(27, 58, 107, 0.08);
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--navy);
+            text-decoration: none;
+            letter-spacing: 0.01em;
+        }
+
+        .logo span { color: var(--coral); }
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            transition: color 0.25s;
+        }
+
+        .nav-links a:hover { color: var(--navy); }
+
+        .nav-cta {
+            background: var(--coral) !important;
+            color: var(--white) !important;
+            padding: 9px 22px;
+            border-radius: 6px;
+            transition: background 0.25s, transform 0.2s !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--coral-light) !important;
+            transform: translateY(-1px);
+        }
+
+        /* ── HERO ────────────────────────────────── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1a4a7a 100%);
+        }
+
+        /* Геометрическая текстура фона */
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 80%, rgba(224, 92, 58, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 40%);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            right: -10%;
+            top: -10%;
+            width: 60vw;
+            height: 60vw;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.06);
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            position: absolute;
+            right: 5%;
+            top: 20%;
+            width: 40vw;
+            height: 40vw;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 760px;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: rgba(224, 92, 58, 0.2);
+            border: 1px solid rgba(224, 92, 58, 0.4);
+            color: #F5A58E;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 100px;
+            margin-bottom: 1.6rem;
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2vw, 1.35rem);
+            color: rgba(255,255,255,0.72);
+            margin: 1.4rem 0 2.4rem;
+            font-weight: 300;
+            max-width: 560px;
+            line-height: 1.7;
+        }
+
+        .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 34px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-primary {
+            background: var(--coral);
+            color: var(--white);
+            box-shadow: 0 8px 24px rgba(224, 92, 58, 0.35);
+        }
+
+        .btn-primary:hover {
+            background: var(--coral-light);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(224, 92, 58, 0.45);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: rgba(255,255,255,0.85);
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        /* Цифры на герое */
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 56px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            flex-wrap: wrap;
+        }
+
+        .hero-stat-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .hero-stat-label {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 4px;
+        }
+
+        /* ── О КОМПАНИИ ──────────────────────────── */
+        .about-section { background: var(--white); }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: start;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            margin-bottom: 18px;
+            font-size: 1.02rem;
+        }
+
+        .about-highlight {
+            background: var(--navy);
+            padding: 36px;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-highlight::before {
+            content: '';
+            position: absolute;
+            right: -30px;
+            top: -30px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(224,92,58,0.15);
+        }
+
+        .about-highlight h3 {
+            color: var(--white);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .expertise-list { list-style: none; }
+
+        .expertise-list li {
+            color: rgba(255,255,255,0.8);
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+
+        .expertise-list li:last-child { border-bottom: none; }
+
+        .expertise-list li::before {
+            content: '✓';
+            color: var(--coral);
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* Цифры */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 56px;
+        }
+
+        .stat-item {
+            background: var(--cream);
+            padding: 32px 24px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(27, 58, 107, 0.1);
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-top: 8px;
+        }
+
+        /* ── УСЛУГИ — КАРТОЧКИ ───────────────────── */
+        .services-section { background: var(--cream-dark); }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 36px 32px;
+            border: 1px solid var(--border);
+            transition: all 0.35s cubic-bezier(.25,.8,.25,1);
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: var(--navy);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 60px rgba(27, 58, 107, 0.13);
+            border-color: transparent;
+        }
+
+        .service-card:hover::before { transform: scaleX(1); }
+
+        .service-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            transition: background 0.3s;
+        }
+
+        .service-card:hover .service-icon {
+            background: linear-gradient(135deg, var(--coral), var(--coral-light));
+        }
+
+        .service-icon i {
+            font-size: 1.4rem;
+            color: var(--white);
+        }
+
+        .service-card h3 {
+            font-size: 1.35rem;
+            color: var(--navy);
+            margin-bottom: 16px;
+        }
+
+        .service-list {
+            list-style: none;
+        }
+
+        .service-list li {
+            padding: 7px 0;
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .service-list li:last-child { border-bottom: none; }
+
+        .service-list li::before {
+            content: '▹';
+            color: var(--coral);
+            font-size: 0.8rem;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        /* ── ОТРАСЛИ ─────────────────────────────── */
+        .industries-section { background: var(--white); }
+
+        .industries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+        }
+
+        .industry-card {
+            background: var(--cream);
+            padding: 28px 18px;
+            text-align: center;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .industry-card:hover {
+            background: var(--navy);
+            border-color: var(--navy);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(27,58,107,0.18);
+        }
+
+        .industry-card:hover h3,
+        .industry-card:hover i {
+            color: var(--white);
+        }
+
+        .industry-card i {
+            font-size: 2rem;
+            color: var(--navy);
+            margin-bottom: 12px;
+            display: block;
+            transition: color 0.3s;
+        }
+
+        .industry-card h3 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text);
+            transition: color 0.3s;
+        }
+
+        /* ── ФУТЕР ───────────────────────────────── */
+        .footer {
+            background: var(--navy);
+            color: rgba(255,255,255,0.7);
+            padding: 64px 0 32px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-col h3 {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--white);
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-col p, .footer-col a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            line-height: 2;
+            font-size: 0.9rem;
+            transition: color 0.25s;
+        }
+
+        .footer-col a:hover { color: var(--coral); }
+
+        .footer-col i {
+            width: 22px;
+            color: var(--coral);
+            margin-right: 10px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.08);
+            border-radius: 8px;
+            color: rgba(255,255,255,0.7) !important;
+            transition: all 0.3s !important;
+        }
+
+        .social-links a:hover {
+            background: var(--coral) !important;
+            color: var(--white) !important;
+            transform: translateY(-3px);
+        }
+
+        .doc-links { list-style: none; }
+
+        .doc-links li { margin-bottom: 10px; }
+
+        .doc-links a {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .footer-divider {
+            border: none;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 28px;
+        }
+
+        .copyright {
+            text-align: center;
+            color: rgba(255,255,255,0.35);
+            font-size: 0.85rem;
+        }
+
+        /* Скролл к топу */
+        :target { scroll-margin-top: 80px; }
+
+        /* ── RESPONSIVE ──────────────────────────── */
+        @media (max-width: 768px) {
+            .navbar .container { flex-direction: column; gap: 12px; }
+            .nav-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .hero-stats { gap: 28px; }
+            .services-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Анимации при появлении */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-content > * {
+            animation: fadeUp 0.7s ease both;
+        }
+        .hero-content > *:nth-child(1) { animation-delay: 0.1s; }
+        .hero-content > *:nth-child(2) { animation-delay: 0.2s; }
+        .hero-content > *:nth-child(3) { animation-delay: 0.35s; }
+        .hero-content > *:nth-child(4) { animation-delay: 0.5s; }
+        .hero-content > *:nth-child(5) { animation-delay: 0.65s; }
+    </style>
+</head>
+<body>
+
+<!-- ─── НАВИГАЦИЯ ─────────────────────────────────── -->
+<nav class="navbar" id="navbar">
+    <div class="container">
+        <a href="#" class="logo">ООО <span>«Счет Консалтинг»</span></a>
+        <div class="nav-links">
+            <a href="#services">Услуги</a>
+            <a href="#industries">Отрасли</a>
+            <a href="#about">О компании</a>
+            <a href="#contacts" class="nav-cta">Контакты</a>
+        </div>
+    </div>
+</nav>
+
+<!-- ─── ГЕРОЙ ──────────────────────────────────────── -->
+<section class="hero" id="home">
+    <div class="hero-inner"></div>
+    <div class="container hero-content">
+        <div class="hero-tag">Экспертные решения для бизнеса</div>
+        <h1>Бухгалтерия. Налоги.<br>Стратегия.</h1>
+        <p>Комплексное сопровождение вашего бизнеса: от бухгалтерского учёта до инвестиционного планирования и корпоративного права.</p>
+        <div class="hero-actions">
+            <a href="#contacts" class="btn btn-primary">Обсудить проект <i class="fas fa-arrow-right"></i></a>
+            <a href="#services" class="btn btn-ghost">Наши услуги</a>
+        </div>
+        <div class="hero-stats">
+            <div>
+                <div class="hero-stat-num">10+</div>
+                <div class="hero-stat-label">лет на рынке</div>
+            </div>
+            <div>
+                <div class="hero-stat-num">50+</div>
+                <div class="hero-stat-label">успешных кейсов</div>
+            </div>
+            <div>
+                <div class="hero-stat-num">7</div>
+                <div class="hero-stat-label">экспертов в штате</div>
+            </div>
+            <div>
+                <div class="hero-stat-num">100%</div>
+                <div class="hero-stat-label">рекомендаций</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── УСЛУГИ — КАРТОЧКИ ──────────────────────────── -->
+<section class="section services-section" id="services">
+    <div class="container">
+        <div class="section-label">Что мы делаем</div>
+        <h2>Наши услуги</h2>
+        <div class="section-underline"></div>
+
+        <div class="services-grid">
+
+            <!-- Карточка 1 -->
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-calculator"></i></div>
+                <h3>Бухгалтерский учёт</h3>
+                <ul class="service-list">
+                    <li>Ведение бухгалтерского и налогового учёта</li>
+                    <li>Восстановление учёта</li>
+                    <li>Составление отчётности</li>
+                    <li>Учётная политика</li>
+                </ul>
+            </div>
+
+            <!-- Карточка 2 -->
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-gavel"></i></div>
+                <h3>Налогообложение и право</h3>
+                <ul class="service-list">
+                    <li>Налоговое планирование и оптимизация</li>
+                    <li>Представительство в налоговых органах</li>
+                    <li>Правовая экспертиза договоров</li>
+                    <li>Корпоративные споры</li>
+                </ul>
+            </div>
+
+            <!-- Карточка 3 -->
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+                <h3>Управленческий консалтинг</h3>
+                <ul class="service-list">
+                    <li>Финансовое моделирование</li>
+                    <li>Анализ финансового состояния</li>
+                    <li>Оптимизация бизнес-процессов</li>
+                    <li>Постановка управленческого учёта</li>
+                </ul>
+            </div>
+
+            <!-- Карточка 4 -->
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-search"></i></div>
+                <h3>Аудит и анализ</h3>
+                <ul class="service-list">
+                    <li>Внутренний аудит</li>
+                    <li>Аудит отдельных объектов учёта</li>
+                    <li>Комплексный анализ бизнеса</li>
+                    <li>Due diligence</li>
+                </ul>
+            </div>
+
+            <!-- Карточка 5 -->
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-rocket"></i></div>
+                <h3>Стратегия и инвестиции</h3>
+                <ul class="service-list">
+                    <li>Разработка стратегий развития</li>
+                    <li>Инвестиционные проекты</li>
+                    <li>Бизнес-планирование</li>
+                    <li>Модернизация бизнес-процессов</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ─── О КОМПАНИИ ─────────────────────────────────── -->
+<section class="section about-section" id="about">
+    <div class="container">
+        <div class="section-label">Кто мы</div>
+        <h2>О компании</h2>
+        <div class="section-underline"></div>
+        <div class="about-grid">
+            <div class="about-text">
+                <p>Мы — команда экспертов с более чем 10-летним опытом в сфере бухгалтерского учёта, налогообложения и управленческого консалтинга. Помогаем бизнесу уверенно расти, минимизировать риски и принимать взвешенные решения.</p>
+                <p>Наша специализация — комплексное сопровождение организаций любых масштабов: от малого бизнеса до крупных холдингов. Мы не просто оказываем услуги, мы становимся частью вашей команды.</p>
+                <p>Работаем на результат и дорожим репутацией — 100% наших клиентов рекомендуют нас партнёрам.</p>
+
+                <div class="stats-grid" style="margin-top: 40px;">
+                    <div class="stat-item">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">лет на рынке</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">успешных кейсов</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">7</div>
+                        <div class="stat-label">экспертов</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">рекомендаций</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-highlight">
+                <h3>Наша экспертиза</h3>
+                <ul class="expertise-list">
+                    <li>Глубокое знание законодательства и судебной практики</li>
+                    <li>Индивидуальный подход к задачам каждого клиента</li>
+                    <li>Прозрачность и честность на всех этапах сотрудничества</li>
+                    <li>Финансовое моделирование и стратегическое планирование</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── ОТРАСЛИ ────────────────────────────────────── -->
+<section class="section industries-section" id="industries">
+    <div class="container">
+        <div class="section-label">Где мы работаем</div>
+        <h2>Отрасли</h2>
+        <div class="section-underline"></div>
+        <div class="industries-grid">
+            <div class="industry-card">
+                <i class="fas fa-industry"></i>
+                <h3>Промышленность</h3>
+            </div>
+            <div class="industry-card">
+                <i class="fas fa-store"></i>
+                <h3>Торговля / Ритейл</h3>
+            </div>
+            <div class="industry-card">
+                <i class="fas fa-building"></i>
+                <h3>Строительство</h3>
+            </div>
+            <div class="industry-card">
+                <i class="fas fa-truck"></i>
+                <h3>Логистика</h3>
+            </div>
+            <div class="industry-card">
+                <i class="fas fa-utensils"></i>
+                <h3>HoReCa</h3>
+            </div>
+            <div class="industry-card">
+                <i class="fas fa-flask"></i>
+                <h3>Фармацевтика</h3>
+            </div>
+            <div class="industry-card">
+                <i class="fas fa-laptop"></i>
+                <h3>IT / Технологии</h3>
+            </div>
+            <div class="industry-card">
+                <i class="fas fa-hand-holding-usd"></i>
+                <h3>Инвестиции</h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── ФУТЕР / КОНТАКТЫ ───────────────────────────── -->
+<footer class="footer" id="contacts">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>ООО «Консалтинг»</h3>
+                <p>Ваш надёжный партнёр в сфере бухгалтерии, налогов и стратегического управления.</p>
+                <div class="social-links">
+                    <a href="#" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="#" target="_blank" aria-label="VK"><i class="fab fa-vk"></i></a>
+                    <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Контакты</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Донецк, ул. Герцена, 36А</p>
+                <p><i class="fas fa-map-marker-alt"></i> Ленинск, ул. Артема 51А, оф. 502<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;БЦ «ДМН Иргаз»</p>
+                <p><i class="fas fa-phone"></i> <a href="tel:+79490476860">+7 949 047 68 60</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:info@consulting.ru">info@consulting.ru</a></p>
+            </div>
+            <div class="footer-col">
+                <h3>Документы</h3>
+                <ul class="doc-links">
+                    <li><a href="#"><i class="fas fa-file-pdf"></i> Презентация компании</a></li>
+                    <li><a href="#"><i class="fas fa-file-contract"></i> Политика конфиденциальности</a></li>
+                    <li><a href="#"><i class="fas fa-file-invoice"></i> Реквизиты</a></li>
+                    <li><a href="#"><i class="fas fa-file-alt"></i> Договор оферты</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="footer-divider">
+        <div class="copyright">© 2025 ООО «Счет Консалтинг». Все права защищены.</div>
+    </div>
+</footer>
+
+<script>
+    // Navbar shadow on scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 10);
+    });
+</script>
+</body>
+</html>

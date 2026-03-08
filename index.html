@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ООО «Консалтинг» – бухгалтерские и управленческие решения</title>
+    <!-- Подключение шрифта Google Fonts (Roboto) и иконок Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Типографика */
+        h1, h2, h3 {
+            font-weight: 500;
+            color: #1a252f;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        h2:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #2980b9;
+            margin: 0.5rem auto 0;
+            border-radius: 2px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-light {
+            background-color: #f9fbfd;
+        }
+
+        /* Фрейм 1 – Герой */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecf0 100%);
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            color: #1e3c5c;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #4a5b6e;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #2980b9;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .btn:hover {
+            background: #1f618d;
+        }
+
+        /* Фрейм 2 – Достижения (цифры) */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #2980b9;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #546e7a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Фрейм 3 – Услуги (выпадающие списки) */
+        .services-accordion {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .accordion-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            border: 1px solid #eef2f6;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            background: white;
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #1e3c5c;
+            transition: background 0.2s;
+        }
+
+        .accordion-header:hover {
+            background: #f1f6fa;
+        }
+
+        .accordion-header i {
+            transition: transform 0.3s;
+            color: #2980b9;
+        }
+
+        .accordion-item.active .accordion-header i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            padding: 0 25px;
+            background: #fafcfe;
+            transition: max-height 0.4s ease-out, padding 0.3s;
+            overflow: hidden;
+            border-top: 1px solid transparent;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 300px; /* достаточно для списка */
+            padding: 20px 25px;
+            border-top-color: #e0e9f0;
+        }
+
+        .service-list {
+            list-style: none;
+        }
+
+        .service-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #d4e0e9;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+
+        .service-list li:before {
+            content: "▹";
+            color: #2980b9;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+
+        .service-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Фрейм 4 – Футер / Контакты */
+        .footer {
+            background: #1e2b37;
+            color: #d0dbe6;
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            color: white;
+            font-weight: 500;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-col p, .footer-col a {
+            color: #b0c4d9;
+            text-decoration: none;
+            line-height: 2;
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+
+        .footer-col i {
+            width: 25px;
+            color: #2980b9;
+        }
+
+        .doc-links {
+            list-style: none;
+        }
+
+        .doc-links li {
+            margin-bottom: 12px;
+        }
+
+        .doc-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #34495e;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        /* Адаптация */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .hero p { font-size: 1.2rem; }
+            .stats-grid { gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Фрейм 1: Название компании и короткий тезис -->
+<section class="hero">
+    <div class="container hero-content">
+        <h1>ООО «Консалтинг»</h1>
+        <p>Бухгалтерский учёт, налогообложение, право и финансовое консультирование для вашего бизнеса</p>
+        <a href="#contacts" class="btn">Связаться с нами</a>
+    </div>
+</section>
+
+<!-- Фрейм 2: Достижения, количество специалистов, успешные кейсы -->
+<section class="section">
+    <div class="container">
+        <h2>Наши достижения</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">10+</div>
+                <div class="stat-label">лет на рынке</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">успешных проектов</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">7</div>
+                <div class="stat-label">экспертов в штате</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">рекомендаций клиентов</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Фрейм 3: Отрасли и услуги (выпадающие списки) -->
+<section class="section section-light">
+    <div class="container">
+        <h2>Направления и услуги</h2>
+        <div class="services-accordion" id="accordion">
+            <!-- Категория 1: Бухгалтерский учет -->
+            <div class="accordion-item active">
+                <div class="accordion-header">
+                    <span><i class="fas fa-calculator" style="margin-right: 12px;"></i> Бухгалтерский учёт</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <ul class="service-list">
+                        <li>Ведение бухгалтерского и налогового учёта</li>
+                        <li>Восстановление учёта</li>
+                        <li>Составление отчётности</li>
+                        <li>Учётная политика</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Категория 2: Налогообложение и право -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span><i class="fas fa-gavel" style="margin-right: 12px;"></i> Налогообложение и право</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <ul class="service-list">
+                        <li>Налоговое планирование и оптимизация</li>
+                        <li>Представительство в налоговых органах</li>
+                        <li>Правовая экспертиза договоров</li>
+                        <li>Корпоративные споры</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Категория 3: Управленческий консалтинг -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span><i class="fas fa-chart-line" style="margin-right: 12px;"></i> Управленческий консалтинг</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <ul class="service-list">
+                        <li>Финансовое моделирование</li>
+                        <li>Анализ финансового состояния</li>
+                        <li>Оптимизация бизнес-процессов</li>
+                        <li>Постановка управленческого учёта</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Категория 4: Аудит и анализ -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span><i class="fas fa-search" style="margin-right: 12px;"></i> Аудит и анализ</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <ul class="service-list">
+                        <li>Внутренний аудит</li>
+                        <li>Аудит отдельных объектов учёта</li>
+                        <li>Комплексный анализ бизнеса</li>
+                        <li>Due diligence</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Категория 5: Стратегия и инвестиции -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span><i class="fas fa-rocket" style="margin-right: 12px;"></i> Стратегия и инвестиции</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <ul class="service-list">
+                        <li>Разработка стратегий развития</li>
+                        <li>Инвестиционные проекты</li>
+                        <li>Бизнес-планирование</li>
+                        <li>Модернизация бизнес-процессов</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Фрейм 4: Футер / Контакты -->
+<footer class="footer" id="contacts">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>ООО «Консалтинг»</h3>
+                <p>Ваш надёжный партнёр в сфере бухгалтерии, налогов и управления.</p>
+                <p>Работаем с 2015 года.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Контакты</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Донецк, ул. Герцена, 36А</p>
+                <p><i class="fas fa-map-marker-alt"></i> Представительство: г. Ленинск, ул. Артема 51А, оф. 502 (БЦ «ДМН Иргаз»)</p>
+                <p><i class="fas fa-phone"></i> <a href="tel:+79490476860">+7 949 047 68 60</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:schetkonsalt@mail.ru">schetkonsalt@mail.ru</a></p>
+            </div>
+            <div class="footer-col">
+                <h3>Документы</h3>
+                <ul class="doc-links">
+                    <li><a href="#"><i class="fas fa-file-pdf"></i> Презентация компании</a></li>
+                    <li><a href="#"><i class="fas fa-file-contract"></i> Политика конфиденциальности</a></li>
+                    <li><a href="#"><i class="fas fa-file-invoice"></i> Реквизиты</a></li>
+                    <li><a href="#"><i class="fas fa-file-alt"></i> Договор оферты</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2025 ООО «Консалтинг». Все права защищены.
+        </div>
+    </div>
+</footer>
+
+<!-- Скрипт для аккордеона (выпадающих списков) -->
+<script>
+    const accordionItems = document.querySelectorAll('.accordion-item');
+
+    accordionItems.forEach(item => {
+        const header = item.querySelector('.accordion-header');
+        header.addEventListener('click', () => {
+            // Закрыть все другие открытые элементы (опционально, можно убрать если нужен множественный выбор)
+            accordionItems.forEach(otherItem => {
+                if (otherItem !== item && otherItem.classList.contains('active')) {
+                    otherItem.classList.remove('active');
+                }
+            });
+            // Переключить текущий
+            item.classList.toggle('active');
+        });
+    });
+</script>
+
+</body>
+</html>
